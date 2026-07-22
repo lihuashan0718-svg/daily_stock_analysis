@@ -8,7 +8,7 @@ AlphaSift 作为独立仓库维护的选股引擎接入 DSA。DSA 默认不启�
 
 - 默认关闭：`ALPHASIFT_ENABLED=false`。
 - 启用入口：设置页或选股页点击开启，或在 `.env` 中配置 `ALPHASIFT_ENABLED=true`。
-- 依赖来源：`requirements.txt` 固定到已验证的 AlphaSift 适配层 commit：`git+https://github.com/lihuashan0718-svg/alphasift.git@eefd544062c800174d57e0c3db346ab1fb763b76#egg=alphasift`（对应提交 `https://github.com/lihuashan0718-svg/alphasift/commit/eefd544062c800174d57e0c3db346ab1fb763b76`，覆盖 PR `https://github.com/ZhuLinsen/alphasift/pull/16`、`https://github.com/ZhuLinsen/alphasift/pull/19`、`https://github.com/ZhuLinsen/alphasift/pull/22`、`https://github.com/ZhuLinsen/alphasift/pull/23`、`https://github.com/ZhuLinsen/alphasift/pull/24`、`https://github.com/ZhuLinsen/alphasift/pull/25`、`https://github.com/ZhuLinsen/alphasift/pull/26`、`https://github.com/ZhuLinsen/alphasift/pull/28`、`https://github.com/ZhuLinsen/alphasift/pull/29`、`https://github.com/ZhuLinsen/alphasift/pull/30`、`https://github.com/ZhuLinsen/alphasift/pull/31`、`https://github.com/ZhuLinsen/alphasift/pull/32`、`https://github.com/ZhuLinsen/alphasift/pull/33`、`https://github.com/ZhuLinsen/alphasift/pull/35`、`https://github.com/ZhuLinsen/alphasift/pull/36` 与 `https://github.com/ZhuLinsen/alphasift/pull/37`）。该来源覆盖 `alphasift.dsa_adapter` 契约、`screen/list_strategies/get_status` 调用、Tencent 日 K、Sina snapshot、source health、stale daily fallback、候选级 quote context、wrapper 数据源 caller-side timeout、东财直连限速与抖动、日线数据源健康度/降级诊断、硬过滤瀑布诊断、策略评估摘要、题材匹配得分、策略目录元数据、`blue_chip_income` / `low_volatility_quality` 策略，以及 LLM ranking 的 `LLM_MAX_TOKENS` 输出上限、timeout 后不重复 JSON-mode 重试和更稳健的 JSON 解析边界，并追加主升浪 V2 八规则、复权日 K 审计与确定性情绪分析。
+- 依赖来源：`requirements.txt` 固定到个人 AlphaSift 仓库中已验证的适配层 commit：`git+https://github.com/lihuashan0718-svg/alphasift.git@eefd544062c800174d57e0c3db346ab1fb763b76#egg=alphasift`（对应提交 `https://github.com/lihuashan0718-svg/alphasift/commit/eefd544062c800174d57e0c3db346ab1fb763b76`）。该来源覆盖 `alphasift.dsa_adapter` 契约、`screen/list_strategies/get_status` 调用、Tencent 日 K、Sina snapshot、source health、stale daily fallback、候选级 quote context、wrapper 数据源 caller-side timeout、东财直连限速与抖动、日线数据源健康度/降级诊断、硬过滤瀑布诊断、策略评估摘要、题材匹配得分、策略目录元数据、`blue_chip_income` / `low_volatility_quality` 策略，以及 LLM ranking 的 `LLM_MAX_TOKENS` 输出上限、timeout 后不重复 JSON-mode 重试和更稳健的 JSON 解析边界，并追加主升浪 V2 八规则、复权日 K 审计与确定性情绪分析。
 - 修复安装来源：`ALPHASIFT_INSTALL_SPEC` 仍保留，默认等于同一个受信任 commit。它不再是策略列表或选股接口的运行时安装主路径，只用于显式调用 `/api/v1/alphasift/install` 时做修复安装和来源校验；未显式配置时才按代码常量 `DEFAULT_ALPHASIFT_INSTALL_SPEC` 回退。
 - 迁移边界（显式 `.env` 优先）：
   - 若 `.env` 中显式保留旧 pin（如 `...de54ea0da367be85770d9589a5bf7ded4f62d386`），DSA 会把该值当作用户覆盖，不会在运行期自动替换为新 pin；
@@ -126,7 +126,7 @@ context = {
 
 AlphaSift 会在 L1 初筛后、LLM 重排前调用 `context["dsa"]` 中的 provider。预排序候选数按 `max(8, max_results * 2)` 计算并封顶 12，为这些候选补充 DSA 行情、基本面和最多 3 条新闻，再把 `dsa_context` 随候选返回。DSA API 在最终 Top 候选阶段复用已有新闻，只补全缺失字段和辅助摘要，避免重复请求。
 
-AlphaSift 侧已在 `lihuashan0718-svg/alphasift@eefd544062c800174d57e0c3db346ab1fb763b76` 提供 DSA provider context 支持、DSA adapter contract，并支持复用 DSA 的 `LLM_TIMEOUT_SEC`；同一 pin 还会读取 `LLM_MAX_TOKENS` 限制 LLM 重排输出，且 timeout 后不再盲目重试无 JSON mode 请求。`dsa_adapter` 稳定契约仍只返回 DSA 已消费的策略基础字段和选股结果字段；上游新增的 strategy facets、overview、本地只读 API 和策略卡片能力暂不进入 DSA API 契约。
+AlphaSift 侧已在 `lihuashan0718-svg/alphasift@eefd544062c800174d57e0c3db346ab1fb763b76` 提供 DSA provider context 支持、DSA adapter contract，并支持复用 DSA 的 `LLM_TIMEOUT_SEC`；同一 pin 还会读取 `LLM_MAX_TOKENS` 限制 LLM 重排输出，且 timeout 后不再盲目重试无 JSON mode 请求。`dsa_adapter` 稳定契约仍只返回 DSA 已消费的策略基础字段和选股结果字段；AlphaSift 新增的 strategy facets、overview、本地只读 API 和策略卡片能力暂不进入 DSA API 契约。
 
 ## DSA 后端行为
 

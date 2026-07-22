@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - [新功能] AlphaSift 主升浪候选新增情绪面展示：提供 0–100 分、置信度、来源、正负事件、证据时间及综合分修正，无证据时明确标记不可用。
 - [改进] AlphaSift 预排序 DSA 上下文按输出数量动态覆盖 Top 8–12 候选，并补充基本面和最多 3 条新闻，最终结果阶段复用已有数据。
 - [修复] AlphaSift 候选未返回原始 `raw` 字段时，选股页安全降级为“观察”，避免展开详情触发页面崩溃。
-- [chore] AlphaSift 依赖锁定到个人 fork 的已验证主升浪 V2 提交，安装源、修复安装 allow-list 和部署示例保持一致。
+- [chore] AlphaSift 依赖锁定到个人仓库的已验证主升浪 V2 提交，安装源、修复安装 allow-list、文档链接和部署示例保持一致。
 - [修复] #2026 外股代码映射到中文显示名时英文新闻相关性判定漏判：新增同源 STOCK_ENGLISH_NAME_MAP 单一真源、canonicalize_foreign_stock_code 规范化入口与 _foreign_english_query_terms 别名解析，使 AAPL/00700/BABA 等 ticker 即使 stock_name 为中文也能在查询构建、相关性打分与多维度情报路径上复用 canonical 英文名，并补齐 .US/.HK suffix / HK 前缀全形式的归类与回归用例；同时在 _score_news_relevance 对 alias 展开 term 做去重，避免 legal alias 展开短名与显式 short alias 重复计分。
 - [修复] #2051 PR Review 的特权 `pull_request_target` 流程不再检出 fork PR head：敏感文件、标签、报告与 AI 审查统一通过 GitHub API 将 PR 元数据和 diff 作为数据读取，只执行主分支可信脚本；Python 语法、Flake8、确定性检查和离线测试继续由无 secrets 的 `pull_request` CI / `backend-gate` 执行，兼容 `actions/checkout` 新增的 fork checkout 安全保护。
 

@@ -1420,7 +1420,7 @@ describe('SettingsPage', () => {
           },
           {
             key: 'ALPHASIFT_INSTALL_SPEC',
-            value: 'git+https://github.com/ZhuLinsen/alphasift.git@2c76b2b6074ae3bae01d52e5e830a4af3e3246b2',
+            value: 'git+https://github.com/lihuashan0718-svg/alphasift.git@eefd544062c800174d57e0c3db346ab1fb763b76',
             rawValueExists: true,
             isMasked: false,
             schema: {

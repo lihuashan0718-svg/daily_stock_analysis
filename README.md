@@ -259,7 +259,7 @@ python main.py --webui-only
 
 | 项目 | 定位 |
 |------|------|
-| [AlphaSift](https://github.com/ZhuLinsen/alphasift) | 多因子选股与全市场扫描，用于从股票池中提取候选标的 |
+| [AlphaSift](https://github.com/lihuashan0718-svg/alphasift) | 多因子选股与全市场扫描，用于从股票池中提取候选标的 |
 | [AlphaEvo](https://github.com/ZhuLinsen/alphaevo) | 策略回测与自我进化，用于验证策略规则，并通过迭代探索策略参数与组合 |
 
 ## 📬 联系与合作

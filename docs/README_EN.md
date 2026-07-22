@@ -247,7 +247,7 @@ After configuring any available AI API key, the Web `/chat` page can use strateg
 
 | Project | Focus |
 |---------|-------|
-| [AlphaSift](https://github.com/ZhuLinsen/alphasift) | Multi-factor stock screening and full-market scanning for building candidate watchlists |
+| [AlphaSift](https://github.com/lihuashan0718-svg/alphasift) | Multi-factor stock screening and full-market scanning for building candidate watchlists |
 | [AlphaEvo](https://github.com/ZhuLinsen/alphaevo) | Strategy backtesting and self-evolution experiments for validating rules and iteratively exploring strategy parameters and combinations |
 
 ## 📞 Contact
